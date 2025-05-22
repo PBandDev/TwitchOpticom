@@ -263,13 +263,13 @@ export function useTrackedChannelsPersistence(queryClient: QueryClient) {
       );
       return { previousChannels };
     },
-    onSuccess: (data, variables, context) => {
+    onSuccess: (_data, variables, _context) => {
       const channelName = variables.displayName
         ? `"${variables.displayName}"`
         : "channel";
       toast.success(`Successfully removed ${channelName}.`);
     },
-    onError: (error, variables, context) => {
+    onError: (_error, variables, context) => {
       if (context?.previousChannels) {
         queryClient.setQueryData(
           queryKeys.trackedChannels(),
@@ -334,7 +334,7 @@ export function useTrackedChannelsPersistence(queryClient: QueryClient) {
       );
       return { previousChannels };
     },
-    onError: (error, variables, context) => {
+    onError: (error, _variables, context) => {
       if (context?.previousChannels) {
         queryClient.setQueryData(
           queryKeys.trackedChannels(),
