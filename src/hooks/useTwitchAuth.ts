@@ -4,7 +4,9 @@ import { StaticAuthProvider, getTokenInfo } from "@twurple/auth";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 export const CLIENT_ID = "n2fvcp3z483fegteujz9zzrrurikz6" as const;
-const REDIRECT_URI = "http://localhost:3000" as const;
+const REDIRECT_URI = import.meta.env.PROD
+  ? "https://pbanddev.github.io/TwitchOpticom/"
+  : ("http://localhost:3000" as const);
 
 type TokenData = {
   accessToken: string;
