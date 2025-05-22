@@ -56,7 +56,7 @@ export default function ChannelList({ accessToken }: ChannelListProps) {
     return (
       <div className="flex flex-col items-center justify-center h-[calc(100vh-5rem)] text-center">
         <img
-          src="/saitama.png"
+          src="saitama.png"
           alt="Saitama from One Punch Man indicating no channels"
           className="w-48 h-48 object-contain mb-6"
         />
