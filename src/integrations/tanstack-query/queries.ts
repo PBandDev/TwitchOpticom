@@ -1,4 +1,4 @@
-import { CLIENT_ID } from "@/hooks/useTwitchAuth";
+import { TWITCH_CLIENT_ID } from "@/config";
 import type { Channel, SearchResult, TrackedChannel } from "@/lib/types";
 import { arrayMove } from "@dnd-kit/sortable";
 import { type QueryClient, useMutation, useQuery } from "@tanstack/react-query";
@@ -56,11 +56,14 @@ export function useChannelStatus({
   return useQuery<Record<string, Channel>, Error>({
     queryKey: queryKeys.channelStatus(trackedChannels),
     queryFn: async () => {
-      if (!accessToken || trackedChannels.length === 0 || !CLIENT_ID) {
+      if (!accessToken || trackedChannels.length === 0 || !TWITCH_CLIENT_ID) {
         return {};
       }
 
-      const authProvider = new StaticAuthProvider(CLIENT_ID, accessToken);
+      const authProvider = new StaticAuthProvider(
+        TWITCH_CLIENT_ID,
+        accessToken,
+      );
       const apiClient = new ApiClient({ authProvider });
 
       const ids = trackedChannels.map((c) => c.id);
@@ -87,9 +90,9 @@ export function useChannelStatus({
       }
       return statusMap;
     },
-    enabled: trackedChannels.length > 0 && !!accessToken && !!CLIENT_ID,
+    enabled: trackedChannels.length > 0 && !!accessToken && !!TWITCH_CLIENT_ID,
     staleTime: 0,
-    refetchInterval: 10 * 1000,
+    refetchInterval: 10 * 1000, // 10 seconds
   });
 }
 
@@ -103,8 +106,8 @@ export function useChannelSearch({
   accessToken,
 }: UseChannelSearchOptions) {
   const apiClient = useMemo(() => {
-    if (!accessToken || !CLIENT_ID) return null;
-    const provider = new StaticAuthProvider(CLIENT_ID, accessToken);
+    if (!accessToken || !TWITCH_CLIENT_ID) return null;
+    const provider = new StaticAuthProvider(TWITCH_CLIENT_ID, accessToken);
     return new ApiClient({ authProvider: provider });
   }, [accessToken]);
 

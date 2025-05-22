@@ -1,14 +1,11 @@
+import { ThemeProvider } from "@/components/ThemeProvider.tsx";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
-
+import { APP_BASE_PATH } from "./config.ts";
 import * as TanStackQueryProvider from "./integrations/tanstack-query/root-provider.tsx";
-
-// Import the generated route tree
-import { routeTree } from "./routeTree.gen";
-
-import { ThemeProvider } from "@/components/ThemeProvider.tsx";
 import reportWebVitals from "./reportWebVitals.ts";
+import { routeTree } from "./routeTree.gen";
 import "./styles.css";
 
 // Create a new router instance
@@ -21,7 +18,7 @@ const router = createRouter({
   scrollRestoration: true,
   defaultStructuralSharing: true,
   defaultPreloadStaleTime: 0,
-  basepath: "/TwitchOpticom/",
+  basepath: APP_BASE_PATH,
 });
 
 // Register the router instance for type safety

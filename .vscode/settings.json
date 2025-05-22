@@ -2,6 +2,7 @@
   "explorer.excludeGitIgnore": false,
   "files.exclude": {
     "**/.agent": false,
+    "**/.cursor": false,
     "**/.vscode": false,
     "**/.git": true,
     "**/.DS_Store": true,

@@ -1,12 +1,16 @@
+import {
+  DEV_REDIRECT_URI,
+  PROD_REDIRECT_URI,
+  TWITCH_CLIENT_ID,
+} from "@/config";
 import { useIsRestoring, useQueryClient } from "@tanstack/react-query";
 import { ApiClient } from "@twurple/api";
 import { StaticAuthProvider, getTokenInfo } from "@twurple/auth";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-export const CLIENT_ID = "n2fvcp3z483fegteujz9zzrrurikz6" as const;
 const REDIRECT_URI = import.meta.env.PROD
-  ? "https://pbanddev.github.io/TwitchOpticom/"
-  : ("http://localhost:3000" as const);
+  ? PROD_REDIRECT_URI
+  : DEV_REDIRECT_URI;
 
 type TokenData = {
   accessToken: string;
@@ -39,7 +43,7 @@ export function useTwitchAuth(): UseTwitchAuthReturn {
 
   const login = useCallback((): void => {
     const scope = encodeURIComponent("user:read:email");
-    const authUrl = `https://id.twitch.tv/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(
+    const authUrl = `https://id.twitch.tv/oauth2/authorize?client_id=${TWITCH_CLIENT_ID}&redirect_uri=${encodeURIComponent(
       REDIRECT_URI,
     )}&response_type=token&scope=${scope}`;
 
@@ -151,14 +155,17 @@ export function useTwitchAuth(): UseTwitchAuthReturn {
 
     (async () => {
       try {
-        const tokenInfo = await getTokenInfo(token.accessToken, CLIENT_ID);
+        const tokenInfo = await getTokenInfo(
+          token.accessToken,
+          TWITCH_CLIENT_ID,
+        );
         const userId = tokenInfo.userId;
         if (!userId) {
           throw new Error("Token info did not contain a user ID");
         }
 
         const authProvider = new StaticAuthProvider(
-          CLIENT_ID,
+          TWITCH_CLIENT_ID,
           token.accessToken,
         );
         const api = new ApiClient({ authProvider });

@@ -11,9 +11,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
-import { LogOut, Moon, Sun, Twitch } from "lucide-react";
+import { Github, LogOut, Moon, Sun, Twitch } from "lucide-react";
 
 export default function Header() {
   const { theme, setTheme } = useTheme();
@@ -101,6 +101,15 @@ export default function Header() {
               </AlertDialog>
             </>
           )}
+          <a
+            href="https://github.com/PBandDev/TwitchOpticon"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={buttonVariants({ variant: "outline", size: "icon" })}
+            aria-label="Open GitHub repository"
+          >
+            <Github className="h-4 w-4" />
+          </a>
           <Button
             variant="outline"
             size="icon"
